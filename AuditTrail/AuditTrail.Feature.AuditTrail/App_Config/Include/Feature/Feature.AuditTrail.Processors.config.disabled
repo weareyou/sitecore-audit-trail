@@ -1,0 +1,133 @@
+﻿<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+
+    <processors>
+
+      <uiAddFromTemplate>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">uiAddFromTemplate</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">uiAddFromTemplate</param>
+        </processor>
+      </uiAddFromTemplate>
+
+      <uiCopyItems>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">uiCopyItems</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">uiCopyItems</param>
+        </processor>
+      </uiCopyItems>
+
+      <uiCloneItems>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">uiCloneItems</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">uiCloneItems</param>
+        </processor>
+      </uiCloneItems>
+
+      <uiDeleteFiles>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">uiDeleteFiles</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">uiDeleteFiles</param>
+        </processor>
+      </uiDeleteFiles>
+
+      <uiDeleteItems>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">uiDeleteItems</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">uiDeleteItems</param>
+        </processor>
+      </uiDeleteItems>
+
+
+      <!-- this throws a save event for every item in the same folder!-->
+      <uiDragItemTo>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">uiDragItemTo</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">uiDragItemTo</param>
+        </processor>
+      </uiDragItemTo>
+
+      <uiDuplicateItem>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">uiDuplicateItem</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">uiDuplicateItem</param>
+        </processor>
+      </uiDuplicateItem>
+
+      <uiMoveItems>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">uiMoveItems</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">uiMoveItems</param>
+        </processor>
+      </uiMoveItems>
+
+      <uiRenameItem>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">uiRenameItem</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">uiRenameItem</param>
+        </processor>
+      </uiRenameItem>
+     
+     
+      <uiUpload>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">uiUpload</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">uiUpload</param>
+        </processor>
+      </uiUpload>
+
+      <deleteVersionsUi>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">deleteVersionsUi</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">deleteVersionsUi</param>
+        </processor>
+      </deleteVersionsUi>
+
+      <uiSaveLayout>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">uiSaveLayout</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">uiSaveLayout</param>
+        </processor>
+      </uiSaveLayout>
+
+      <!-- catches too much?
+      <saveUI>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditStart" patch:before="*[1]">
+          <param desc="eventName">saveUI</param>
+        </processor>
+        <processor mode="on" type="AuditTrail.Feature.AuditTrail.Processors.ProcessAuditor, AuditTrail.Feature.AuditTrail" method="ProcessAuditEnd" runIfAborted="true">
+          <param desc="eventName">saveUI</param>
+        </processor>
+      </saveUI>
+      -->
+      
+      
+
+  
+  </processors>
+  </sitecore>
+</configuration>

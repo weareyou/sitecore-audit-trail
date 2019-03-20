@@ -1,0 +1,27 @@
+﻿<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/">
+  <sitecore>
+
+    <pipelines>
+      <group name="itemProvider" groupName="itemProvider">
+        <pipelines>
+
+          <createItem>
+            <processor type="AuditTrail.Feature.AuditTrail.Processors.ItemProvider.CreateItem, AuditTrail.Feature.AuditTrail"/>
+            <processor type="AuditTrail.Feature.AuditTrail.Processors.ItemProvider.CreateItemPost, AuditTrail.Feature.AuditTrail"/>
+          </createItem>
+
+          <addFromTemplate>
+            <processor type="AuditTrail.Feature.AuditTrail.Processors.ItemProvider.AddFromTemplate, AuditTrail.Feature.AuditTrail"/>
+          </addFromTemplate>
+
+          <saveItem>
+            <processor type="AuditTrail.Feature.AuditTrail.Processors.ItemProvider.SaveItem, AuditTrail.Feature.AuditTrail"/>
+            <processor type="AuditTrail.Feature.AuditTrail.Processors.ItemProvider.SaveItemPost, AuditTrail.Feature.AuditTrail"/>
+          </saveItem>
+
+        </pipelines>
+      </group>
+    </pipelines>
+
+  </sitecore>
+</configuration>

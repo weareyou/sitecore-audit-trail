@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{3FA671A8-4F22-4835-A758-6C388F981D31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{0B4D2F49-EA00-462B-BBA2-3F1EF4E62106}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Feature", "Feature", "{124445CD-A557-47E8-8DFF-DB2F05337BDB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{6284E01A-A615-4968-B6BE-EA0B2C4A2E6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditTrail.Project.Site", "AuditTrail.Project.Site\AuditTrail.Project.Site.csproj", "{D7EF6EDF-409F-4A4C-8147-9EE1726AC34C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuditTrail", "AuditTrail", "{D6D50FC4-8AF0-43B3-85C5-3CB84DF77F4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditTrail.Feature.AuditTrail", "AuditTrail.Feature.AuditTrail\AuditTrail.Feature.AuditTrail.csproj", "{DE7EFB73-29DF-4582-9957-859D6AC403F6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuditTrail.Feature.AuditTrail.AzureFunctions", "AuditTrail.Feature.AuditTrail.AzureFunctions\AuditTrail.Feature.AuditTrail.AzureFunctions.csproj", "{EA749AA2-07D2-4653-8ACE-B4CC9C0EEB13}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuditTrail.Feature.AuditTrail.Models", "AuditTrail.Feature.AuditTrail.Models\AuditTrail.Feature.AuditTrail.Models.csproj", "{15804257-634B-436E-A0BC-6C1C7303C1F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7EF6EDF-409F-4A4C-8147-9EE1726AC34C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7EF6EDF-409F-4A4C-8147-9EE1726AC34C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7EF6EDF-409F-4A4C-8147-9EE1726AC34C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7EF6EDF-409F-4A4C-8147-9EE1726AC34C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE7EFB73-29DF-4582-9957-859D6AC403F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE7EFB73-29DF-4582-9957-859D6AC403F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE7EFB73-29DF-4582-9957-859D6AC403F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE7EFB73-29DF-4582-9957-859D6AC403F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA749AA2-07D2-4653-8ACE-B4CC9C0EEB13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA749AA2-07D2-4653-8ACE-B4CC9C0EEB13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA749AA2-07D2-4653-8ACE-B4CC9C0EEB13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA749AA2-07D2-4653-8ACE-B4CC9C0EEB13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15804257-634B-436E-A0BC-6C1C7303C1F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15804257-634B-436E-A0BC-6C1C7303C1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15804257-634B-436E-A0BC-6C1C7303C1F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15804257-634B-436E-A0BC-6C1C7303C1F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D7EF6EDF-409F-4A4C-8147-9EE1726AC34C} = {3FA671A8-4F22-4835-A758-6C388F981D31}
+		{D6D50FC4-8AF0-43B3-85C5-3CB84DF77F4E} = {124445CD-A557-47E8-8DFF-DB2F05337BDB}
+		{DE7EFB73-29DF-4582-9957-859D6AC403F6} = {D6D50FC4-8AF0-43B3-85C5-3CB84DF77F4E}
+		{EA749AA2-07D2-4653-8ACE-B4CC9C0EEB13} = {D6D50FC4-8AF0-43B3-85C5-3CB84DF77F4E}
+		{15804257-634B-436E-A0BC-6C1C7303C1F0} = {D6D50FC4-8AF0-43B3-85C5-3CB84DF77F4E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D3DA6164-0F32-4EA9-B330-0F2B52790853}
+	EndGlobalSection
+EndGlobal
