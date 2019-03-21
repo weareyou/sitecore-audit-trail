@@ -33,13 +33,42 @@ namespace AuditTrail.Feature.AuditTrail.Network
 
             var response = client.PostAsync(Properties.Resources.STORE_EVENT_DATA_FUNCTION_URL, content);
         }
-        /*
+
+        
         public async static Task<string> GetItemViewHTML()
         {
             HttpClient client = new HttpClient();
 
-            string page = await client.GetAsync("https://sitecoreaudittrail.blob.core.windows.net/$web/index.html");
+            string webpath = "https://sitecoreaudittrail.blob.core.windows.net/$web/";
 
-        }*/
+            var page = await client.GetAsync("https://sitecoreaudittrail.blob.core.windows.net/$web/index.html");
+
+            string html = await page.Content.ReadAsStringAsync();
+
+            html = html.Replace("href=/", "href=" + webpath);
+            html = html.Replace("src=/", "src=" + webpath);
+
+            return html;
+        }
+
+        public async static Task<List<AuditRecord>> GetItemHistory(string itemId)
+        {
+            HttpClient client = new HttpClient();
+
+            List<AuditRecord> records = new List<AuditRecord>();
+            string route = "http://audit-trail.azurewebsites.net/api/item/" + itemId + "?code=wV12VHq7F0ACsu0FJWoTWJVPMZAg7wbKy6SI4fR6jCWyyqYdjaqzNg==";
+
+            var response = await client.GetAsync(route);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return records;
+            }
+
+            string json = await response.Content.ReadAsStringAsync();
+            records = JsonConvert.DeserializeObject<List<AuditRecord>>(json);
+
+            return records;
+        }
     }
 }
