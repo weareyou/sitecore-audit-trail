@@ -122,6 +122,8 @@
     <Content Include="App_Config\Include\Feature\Feature.AuditTrail.DataProviders.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Assets\index.html" />
+    <Content Include="Assets\notfound.html" />
     <None Include="App_Config\Include\Feature\Feature.AuditTrail.ExperienceEditor.config.disabled" />
     <None Include="App_Config\Include\Feature\Feature.AuditTrail.ItemProviders.config.disabled" />
     <None Include="App_Config\Include\Feature\Feature.AuditTrail.Processors.config.disabled" />
