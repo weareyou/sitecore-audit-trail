@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="..\packagingsettings.targets"/>
+
+  <PropertyGroup>
+    <ExcludeFilesFromDeployment>
+      AuditTrail.Feature.AuditTrail.Models.wpp.targets;
+      parameters.xml;
+      bin\Castle.Core.dll;
+      bin\Glass*;
+      bin\HtmlAgilityPack*;
+      bin\MongoDB*;
+      bin\ICSharpCode.*;
+      bin\Microsoft*;
+      bin\Lucene.Net.*;
+      bin\WebActivatorEx*;
+      bin\roslyn\**;
+      bin\Sitecore.*;
+      bin\System.*;
+      bin\Telerik.Web.UI.dll;
+      packages.config;
+      web.config;
+      bin\Castle*.dll;
+      bin\Yahoo*;
+      bin\Iesi.Collections*;
+      bin\EcmaScript.NET*;
+      bin\Newtonsoft.Json.dll
+    </ExcludeFilesFromDeployment>
+    <IncludeSetACLProviderOnDestination>False</IncludeSetACLProviderOnDestination>
+  </PropertyGroup>
+
+  <Target Name="DefineCustomFiles">
+    <ItemGroup>
+      <CustomSerializationFilesToInclude Include="..\serialization\**\*" />
+    </ItemGroup>
+  </Target>
+ 
+  <Target Name="CustomCollectFiles">
+    <ItemGroup>
+      <FilesForPackagingFromProject Include="@(CustomSerializationFilesToInclude)">
+        <DestinationRelativePath>App_Data/Unicorn/%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+  </Target>
+ 
+  <PropertyGroup>
+    <CopyAllFilesToSingleFolderForPackageDependsOn>
+      DefineCustomFiles;
+      CustomCollectFiles;
+      $(CopyAllFilesToSingleFolderForPackageDependsOn);
+    </CopyAllFilesToSingleFolderForPackageDependsOn>
+ 
+    <CopyAllFilesToSingleFolderForMsdeployDependsOn>
+      DefineCustomFiles;
+      CustomCollectFiles;
+      $(CopyAllFilesToSingleFolderForPackageDependsOn);
+    </CopyAllFilesToSingleFolderForMsdeployDependsOn>
+  </PropertyGroup>
+</Project>

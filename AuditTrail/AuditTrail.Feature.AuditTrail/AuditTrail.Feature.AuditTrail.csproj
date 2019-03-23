@@ -127,7 +127,9 @@
     <None Include="App_Config\Include\Feature\Feature.AuditTrail.ExperienceEditor.config.disabled" />
     <None Include="App_Config\Include\Feature\Feature.AuditTrail.ItemProviders.config.disabled" />
     <None Include="App_Config\Include\Feature\Feature.AuditTrail.Processors.config.disabled" />
+    <None Include="Properties\PublishProfiles\ Create Package.pubxml" />
     <None Include="Properties\PublishProfiles\audit-trail - Zip Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\Deploy Test.pubxml" />
     <None Include="Properties\PublishProfiles\Enexis.pubxml" />
     <None Include="Properties\PublishProfiles\LocalModule.pubxml" />
     <None Include="Web.config">

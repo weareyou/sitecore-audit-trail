@@ -9,6 +9,7 @@ using AuditTrail.Feature.AuditTrail.Network;
 using Sitecore.Configuration;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
 
@@ -19,8 +20,18 @@ namespace AuditTrail.Feature.AuditTrail.Commands
         //TODO: replace this dumpster fire with a maintainable solution
         public override void Execute(CommandContext context)
         {
-            //SheerResponse.Alert("This should show the item's history.", false);
-            string itemId = context.Parameters["id"];
+            string itemId = "";
+
+            Assert.ArgumentNotNull((object)context, nameof(context));
+            if (context.Items.Length  > 0)
+            {
+                itemId = context.Items[0].ID.ToString();
+            }
+            else {
+                itemId = context.Parameters["id"];
+            }
+
+                
             try
             {
                 List<AuditRecord> records = Task.Run(async () => { return await FunctionRequests.GetItemHistory(itemId); }).Result;
