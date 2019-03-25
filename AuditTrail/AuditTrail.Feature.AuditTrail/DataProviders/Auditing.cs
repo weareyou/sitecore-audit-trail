@@ -32,7 +32,7 @@ namespace AuditTrail.Feature.AuditTrail.DataProviders
         {
             record.ItemId = item.ID.ToString();
             record.ItemName = item.Name;
-            record.SitecoreInstanceName = Sitecore.Context.Domain.Name;
+            record.SitecoreInstanceName = Sitecore.Globals.ServerUrl;
             record.User = Sitecore.Context.User.Name;
             record.Timestamp = DateTime.Now;
             record.TemplateName = Database.GetDatabase("master").GetTemplate(item.TemplateID).Name;
@@ -54,7 +54,7 @@ namespace AuditTrail.Feature.AuditTrail.DataProviders
             }
             else
             {
-                record.EventOrigin = "API or code";
+                record.EventOrigin = "Automated";
             }
 
 
