@@ -35,13 +35,13 @@ export default {
                 
             }
         }
-    },
+    }/*,
     computed: {
         filteredRecords: function() {
             var rlist = [];
             
         }
-    },
+    }*/,
     created() {
         this.retrieveRecords();
         this.subscribeSignalR();

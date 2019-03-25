@@ -12,6 +12,7 @@
     "axios": "^0.18.0",
     "moment": "^2.24.0",
     "vue": "^2.6.6",
+    "vue-collapse": "^1.0.31",
     "vue-multiselect": "^2.1.4"
   },
   "devDependencies": {
