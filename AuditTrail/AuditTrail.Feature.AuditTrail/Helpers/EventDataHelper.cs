@@ -9,7 +9,10 @@ namespace AuditTrail.Feature.AuditTrail.Helpers
 {
     public static class EventDataHelper
     {
+        // make these config variables?
         public static bool IgnoreDefaultItemFields { get; set; } = true;
+        public static bool IgnoreScheduledEvents { get; set; } = true;
+
 
         public static Dictionary<string, FieldChange> StoreFieldChanges(Sitecore.Data.Items.ItemChanges itemChanges)
         {
@@ -61,6 +64,9 @@ namespace AuditTrail.Feature.AuditTrail.Helpers
 
         public static void StoreRecord(AuditRecord record)
         {
+            if (IgnoreScheduledEvents && IsScheduledEvent(record))
+                return;
+
             if (AuditAggregator.Instance.Aggregating)
             {
                 AuditAggregator.Instance.AddAuditRecord(record);
@@ -74,6 +80,13 @@ namespace AuditTrail.Feature.AuditTrail.Helpers
         public static bool IsDefaultItemField(string fieldName)
         {
             if (fieldName.StartsWith("__"))
+                return true;
+            return false;
+        }
+
+        public static bool IsScheduledEvent(AuditRecord record)
+        {
+            if (record.TemplateName == "Schedule")
                 return true;
             return false;
         }

@@ -17,7 +17,7 @@ namespace AuditTrail.Feature.AuditTrail.Commands
 {
     public class ShowItemHistory : Command
     {
-        //TODO: replace this dumpster fire with a maintainable solution
+ 
         public override void Execute(CommandContext context)
         {
             string itemId = "";
