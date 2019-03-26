@@ -1,18 +1,14 @@
 ﻿using AuditTrail.Feature.AuditTrail.Models;
 using AuditTrail.Feature.AuditTrail.Network;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace AuditTrail.Feature.AuditTrail.Helpers
 {
     public static class EventDataHelper
     {
-        // make these config variables?
         public static bool IgnoreDefaultItemFields { get; set; } = true;
-        public static bool IgnoreScheduledEvents { get; set; } = true;
 
+        public static bool IgnoreScheduledEvents { get; set; } = true;
 
         public static Dictionary<string, FieldChange> StoreFieldChanges(Sitecore.Data.Items.ItemChanges itemChanges)
         {
@@ -20,24 +16,27 @@ namespace AuditTrail.Feature.AuditTrail.Helpers
 
             foreach (Sitecore.Data.Items.FieldChange fieldChange in itemChanges.FieldChanges)
             {
-                FieldChange fieldChangeRecord = new FieldChange();
-                fieldChangeRecord.FieldId = fieldChange.FieldID.ToString();
-                fieldChangeRecord.NewValue = fieldChange.Value;
-                fieldChangeRecord.OldValue = fieldChange.OriginalValue;
+                var fieldChangeRecord = new FieldChange
+                {
+                    FieldId = fieldChange.FieldID.ToString(),
+                    NewValue = fieldChange.Value,
+                    OldValue = fieldChange.OriginalValue
+                };
 
-
-                // Empty fields lack a "Definition" and require a placeholder name.
+                // empty fields lack a "Definition" and require a placeholder name
                 if (fieldChange.Definition != null)
+                {
                     fieldChangeRecord.FieldName = fieldChange.Definition.Name;
+                }
                 else
                 {
-                    fieldChangeRecord.FieldName = "Undefined Field";
+                    fieldChangeRecord.FieldName = $"Undefined field ({fieldChangeRecord.FieldId})";
                 }
 
-
                 if (!(IsDefaultItemField(fieldChangeRecord.FieldName) && IgnoreDefaultItemFields))
+                {
                     fields.Add(fieldChangeRecord.FieldName, fieldChangeRecord);
-
+                }
             }
 
             return fields;
@@ -49,12 +48,13 @@ namespace AuditTrail.Feature.AuditTrail.Helpers
 
             foreach (var propertyChange in itemChanges.Properties)
             {
-                PropertyChange propertyChangeRecord = new PropertyChange();
-
-                propertyChangeRecord.NewValue = propertyChange.Value.Value.ToString();
-                propertyChangeRecord.OldValue = propertyChange.Value.OriginalValue.ToString();
-                propertyChangeRecord.PropertyName = propertyChange.Value.Name;
-
+                var propertyChangeRecord = new PropertyChange
+                {
+                    NewValue = propertyChange.Value.Value.ToString(),
+                    OldValue = propertyChange.Value.OriginalValue.ToString(),
+                    PropertyName = propertyChange.Value.Name
+                };
+                
                 properties.Add(propertyChangeRecord.PropertyName, propertyChangeRecord);
 
             }
@@ -67,28 +67,17 @@ namespace AuditTrail.Feature.AuditTrail.Helpers
             if (IgnoreScheduledEvents && IsScheduledEvent(record))
                 return;
 
-            if (AuditAggregator.Instance.Aggregating)
-            {
-                AuditAggregator.Instance.AddAuditRecord(record);
-            }
-            else
-            {
-                FunctionRequests.SendEventData(record);
-            }
+            FunctionRequests.SendEventData(record);
         }
 
         public static bool IsDefaultItemField(string fieldName)
         {
-            if (fieldName.StartsWith("__"))
-                return true;
-            return false;
+            return fieldName.StartsWith("__");
         }
 
         public static bool IsScheduledEvent(AuditRecord record)
         {
-            if (record.TemplateName == "Schedule")
-                return true;
-            return false;
+            return record.TemplateName.Equals("Schedule");
         }
     }
 }

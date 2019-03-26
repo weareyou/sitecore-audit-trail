@@ -124,9 +124,6 @@
     </Content>
     <Content Include="Assets\index.html" />
     <Content Include="Assets\notfound.html" />
-    <None Include="App_Config\Include\Feature\Feature.AuditTrail.ExperienceEditor.config.disabled" />
-    <None Include="App_Config\Include\Feature\Feature.AuditTrail.ItemProviders.config.disabled" />
-    <None Include="App_Config\Include\Feature\Feature.AuditTrail.Processors.config.disabled" />
     <None Include="Properties\PublishProfiles\ Create Package.pubxml" />
     <None Include="Properties\PublishProfiles\audit-trail - Zip Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Deploy Test.pubxml" />
@@ -139,15 +136,8 @@
   <ItemGroup>
     <Compile Include="Commands\ShowItemHistory.cs" />
     <Compile Include="DataProviders\Auditing.cs" />
-    <Compile Include="Helpers\AuditAggregator.cs" />
     <Compile Include="Helpers\EventDataHelper.cs" />
     <Compile Include="Network\FunctionRequests.cs" />
-    <Compile Include="Processors\ItemProvider\AddFromTemplate.cs" />
-    <Compile Include="Processors\ItemProvider\CreateItem.cs" />
-    <Compile Include="Processors\ItemProvider\CreateItemPost.cs" />
-    <Compile Include="Processors\ItemProvider\SaveItem.cs" />
-    <Compile Include="Processors\ItemProvider\SaveItemPost.cs" />
-    <Compile Include="Processors\ProcessAuditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
