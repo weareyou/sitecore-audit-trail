@@ -1,0 +1,7 @@
+{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=sitecoreaudittrail;AccountKey=J10JGsEIk6p5/b01ZbAbCXJt4FaYUfJ5RpMn7imQEWcTlXe8Otjr+8CLqmdy3XteamKAfDojyqHYSOeVjyAmQA==;BlobEndpoint=https://sitecoreaudittrail.blob.core.windows.net/;TableEndpoint=https://sitecoreaudittrail.table.core.windows.net/;QueueEndpoint=https://sitecoreaudittrail.queue.core.windows.net/;FileEndpoint=https://sitecoreaudittrail.file.core.windows.net/",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet"
+    }
+}

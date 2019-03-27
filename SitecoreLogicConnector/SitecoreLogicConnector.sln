@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{541B4AF9-BFAE-49AE-92AD-5141AA711ABC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Feature", "Feature", "{6518BE66-3E9A-48A2-98D6-EE272C1FF9FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{65729318-F9EA-4398-B6E9-53A9E5797A25}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{8A240505-614A-4652-A4BE-F32DF8F5CFDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitecoreLogicConnector.Project.Site", "SitecoreLogicConnector.Project.Site\SitecoreLogicConnector.Project.Site.csproj", "{7143A59D-F825-42DE-9B82-7329843E5BE7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SLC", "SLC", "{91F34BC2-93AD-4228-889E-25B9E0A9ABAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitecoreLogicConnector.Feature.SLC.AzureFunctions", "SitecoreLogicConnector.Feature.SLC.AzureFunctions\SitecoreLogicConnector.Feature.SLC.AzureFunctions.csproj", "{667B4E9C-29FE-4C4D-B43C-F82C31CCA3B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SitecoreLogicConnector.Feature.SLC", "SitecoreLogicConnector.Feature.SLC\SitecoreLogicConnector.Feature.SLC.csproj", "{AC34434F-4912-405E-AC6B-0FF325B76732}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7143A59D-F825-42DE-9B82-7329843E5BE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7143A59D-F825-42DE-9B82-7329843E5BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7143A59D-F825-42DE-9B82-7329843E5BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7143A59D-F825-42DE-9B82-7329843E5BE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{667B4E9C-29FE-4C4D-B43C-F82C31CCA3B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{667B4E9C-29FE-4C4D-B43C-F82C31CCA3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{667B4E9C-29FE-4C4D-B43C-F82C31CCA3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{667B4E9C-29FE-4C4D-B43C-F82C31CCA3B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC34434F-4912-405E-AC6B-0FF325B76732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC34434F-4912-405E-AC6B-0FF325B76732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC34434F-4912-405E-AC6B-0FF325B76732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC34434F-4912-405E-AC6B-0FF325B76732}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7143A59D-F825-42DE-9B82-7329843E5BE7} = {8A240505-614A-4652-A4BE-F32DF8F5CFDF}
+		{91F34BC2-93AD-4228-889E-25B9E0A9ABAE} = {6518BE66-3E9A-48A2-98D6-EE272C1FF9FF}
+		{667B4E9C-29FE-4C4D-B43C-F82C31CCA3B2} = {91F34BC2-93AD-4228-889E-25B9E0A9ABAE}
+		{AC34434F-4912-405E-AC6B-0FF325B76732} = {91F34BC2-93AD-4228-889E-25B9E0A9ABAE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3073D17A-FD77-4293-AAAF-DDE5EF273515}
+	EndGlobalSection
+EndGlobal
