@@ -64,8 +64,4 @@ export default {
   max-height:0px;
 }
 
-
-
-
-
 </style>
