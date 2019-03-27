@@ -1,10 +1,6 @@
-using System;
-using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
@@ -40,10 +36,9 @@ namespace AuditTrail.Feature.AuditTrail.AzureFunctions.SignalR
             await signalRMessages.AddAsync(
                 new SignalRMessage
                 {
-                    Target = "GeneralEventUpdate", // the function called clientside
-                    Arguments = new[] { JsonConvert.SerializeObject(documents) } // careful here, what is documents?
+                    Target = "GeneralEventUpdate", // the name of this value corresponds with the function called from the client using JavaScript
+                    Arguments = new object[] { JsonConvert.SerializeObject(documents) }
                 });
         }
-
     }
 }

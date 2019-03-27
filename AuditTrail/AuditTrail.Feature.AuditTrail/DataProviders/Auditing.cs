@@ -7,11 +7,9 @@ using Sitecore.Data.Items;
 using Sitecore.Data.SqlServer;
 using Sitecore.Globalization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Sitecore.ExperienceEditor.Speak.Server.Contexts;
 using AuditTrail.Feature.AuditTrail.Models;
+// ReSharper disable RedundantOverriddenMember
+// because Sitecore requires overriding all data provider operations to prevent duplicate calls from multiple provider listeners / implementations
 
 namespace AuditTrail.Feature.AuditTrail.DataProviders
 {
@@ -25,7 +23,6 @@ namespace AuditTrail.Feature.AuditTrail.DataProviders
     {
         public Auditing(string connectionString) : base(connectionString)
         {
-
         }
 
         public void PopulateDefaultFields(ItemDefinition item, AuditRecord record)
@@ -37,14 +34,13 @@ namespace AuditTrail.Feature.AuditTrail.DataProviders
             record.Timestamp = DateTime.Now;
             record.TemplateName = Database.GetDatabase("master").GetTemplate(item.TemplateID).Name;
 
-
             // Event Origin: CE, EE, API or other(code)
-            // TODO: this is not quite accurate yet
-            string task = "";
+            // TODO: this may not be quite accurate yet
+            var task = string.Empty;
             if (Sitecore.Context.Task != null)
                 task = Sitecore.Context.Task.Name;
-            bool ee = Sitecore.Context.PageMode.IsExperienceEditor;
-            if (task == "Sheer" && !ee)
+            var ee = Sitecore.Context.PageMode.IsExperienceEditor;
+            if (task.Equals("Sheer") && !ee)
             {
                 record.EventOrigin = "Content Editor";
             } 
@@ -56,22 +52,19 @@ namespace AuditTrail.Feature.AuditTrail.DataProviders
             {
                 record.EventOrigin = "Automated";
             }
-
-
         }
 
-        // Events
-        // Two CreateItems in the base provider, first is possibly to be deprecated?
+        // two CreateItem handlers in the base provider, first one might possibly be deprecated?
         public override bool CreateItem(ID itemId, string itemName, ID templateId, ItemDefinition parent, CallContext context)
         {
             return CreateItem(itemId, itemName, templateId, parent, DateTime.Now, context);
         }
+
         public override bool CreateItem(ID itemId, string itemName, ID templateId, ItemDefinition parent, DateTime created, CallContext context)
         {
             var item = GetItemDefinition(itemId, context);
 
-            AuditRecord record = new AuditRecord();
-            record.Event = "Created";
+            var record = new AuditRecord {Event = "Created"};
             PopulateDefaultFields(item, record);
 
             record.EventData.Created = new Created();
@@ -83,16 +76,16 @@ namespace AuditTrail.Feature.AuditTrail.DataProviders
 
         public override bool SaveItem(ItemDefinition item, ItemChanges changes, CallContext context)
         {
-            AuditRecord record = new AuditRecord();
-            record.Event = "Saved";
+            var record = new AuditRecord {Event = "Saved"};
             PopulateDefaultFields(item, record);
 
-            record.EventData.Saved = new Saved();
+            record.EventData.Saved = new Saved
+            {
+                Fields = EventDataHelper.StoreFieldChanges(changes),
+                Properties = EventDataHelper.StorePropertyChanges(changes)
+            };
 
-            record.EventData.Saved.Fields = EventDataHelper.StoreFieldChanges(changes);
-            record.EventData.Saved.Properties = EventDataHelper.StorePropertyChanges(changes);
-
-            // careful; if default fields are filtered out, this will skip an event from being saved alltogether
+            // careful; if default fields are filtered out, this will skip an event from being saved altogether
             if (record.EventData.Saved.Fields.Count != 0 || record.EventData.Saved.Properties.Count != 0)
                 EventDataHelper.StoreRecord(record);
 
@@ -101,32 +94,31 @@ namespace AuditTrail.Feature.AuditTrail.DataProviders
 
         public override bool MoveItem(ItemDefinition item, ItemDefinition destination, CallContext context)
         {
-            AuditRecord record = new AuditRecord();
-            record.Event = "Moved";
+            var record = new AuditRecord {Event = "Moved"};
             PopulateDefaultFields(item, record);
 
-            record.EventData.Moved = new Moved();
-
-            record.EventData.Moved.DestinationPath = Database.GetDatabase("master").Items.GetItem(destination.ID).Paths.ContentPath;
+            record.EventData.Moved = new Moved
+            {
+                DestinationPath = Database.GetDatabase("master").Items.GetItem(destination.ID).Paths.ContentPath
+            };
 
             EventDataHelper.StoreRecord(record);
 
             return true;
         }
 
-        public override bool CopyItem(ItemDefinition item, ItemDefinition destination, string copyName, ID copyID, CallContext context)
+        public override bool CopyItem(ItemDefinition item, ItemDefinition destination, string copyName, ID copyId, CallContext context)
         {
-            AuditRecord record = new AuditRecord();
-            record.Event = "Copied";
+            var record = new AuditRecord {Event = "Copied"};
             PopulateDefaultFields(item, record);
 
-            record.EventData.Copied = new Copied();
-
-            record.EventData.Copied.ItemPath = Database.GetDatabase("master").Items.GetItem(item.ID).Paths.ContentPath;
-
-            record.EventData.Copied.ItemIdCopy = destination.ID.ToString();
-            record.EventData.Copied.ItemNameCopy = destination.Name;
-            record.EventData.Copied.ItemPathCopy = Database.GetDatabase("master").Items.GetItem(destination.ID).Paths.ContentPath;
+            record.EventData.Copied = new Copied
+            {
+                ItemPath = Database.GetDatabase("master").Items.GetItem(item.ID).Paths.ContentPath,
+                ItemIdCopy = destination.ID.ToString(),
+                ItemNameCopy = destination.Name,
+                ItemPathCopy = Database.GetDatabase("master").Items.GetItem(destination.ID).Paths.ContentPath
+            };
 
             EventDataHelper.StoreRecord(record);
 
@@ -135,8 +127,7 @@ namespace AuditTrail.Feature.AuditTrail.DataProviders
 
         public override bool DeleteItem(ItemDefinition item, CallContext context)
         {
-            AuditRecord record = new AuditRecord();
-            record.Event = "Deleted";
+            var record = new AuditRecord {Event = "Deleted"};
             PopulateDefaultFields(item, record);
 
             record.EventData.Deleted = new Deleted();
@@ -146,35 +137,26 @@ namespace AuditTrail.Feature.AuditTrail.DataProviders
             return true;
         }
 
-        // Versioning
-
         public override int AddVersion(ItemDefinition item, VersionUri baseVersion, CallContext context)
         {
             var baseVersionResult = baseVersion.Version.Number + 1;
 
-            AuditRecord record = new AuditRecord();
-            record.Event = "VersionAdded";
+            var record = new AuditRecord {Event = "VersionAdded"};
             PopulateDefaultFields(item, record);
 
-            record.EventData.VersionAdded = new VersionAdded();
-
-            record.EventData.VersionAdded.Version = baseVersionResult;
+            record.EventData.VersionAdded = new VersionAdded {Version = baseVersionResult};
 
             EventDataHelper.StoreRecord(record);
-
-
+            
             return baseVersion.Version.Number;
         }
 
         public override bool RemoveVersion(ItemDefinition item, VersionUri version, CallContext context)
         {
-            AuditRecord record = new AuditRecord();
-            record.Event = "VersionRemoved";
+            var record = new AuditRecord {Event = "VersionRemoved"};
             PopulateDefaultFields(item, record);
 
-            record.EventData.VersionRemoved = new VersionRemoved();
-
-            record.EventData.VersionRemoved.Version = version.Version.Number;
+            record.EventData.VersionRemoved = new VersionRemoved {Version = version.Version.Number};
 
             EventDataHelper.StoreRecord(record);
 
@@ -187,14 +169,6 @@ namespace AuditTrail.Feature.AuditTrail.DataProviders
             return true;
         }
 
-
-
-
-
-
-
-        // Default read, pass through to default DataProvider
-        
         public override IDList GetChildIDs(ItemDefinition item, CallContext context)
         {
             return new IDList();
@@ -202,29 +176,22 @@ namespace AuditTrail.Feature.AuditTrail.DataProviders
 
         public override ItemDefinition GetItemDefinition(ID itemId, CallContext context)
         {
-
             return base.GetItemDefinition(itemId, context);
         }
 
         public override FieldList GetItemFields(ItemDefinition itemDefinition, VersionUri versionUri, CallContext context)
         {
-
             return base.GetItemFields(itemDefinition, versionUri, context);
         }
 
         public override VersionUriList GetItemVersions(ItemDefinition itemDefinition, CallContext context)
         {
-
             return base.GetItemVersions(itemDefinition, context);
         }
 
         public override ID GetParentID(ItemDefinition itemDefinition, CallContext context)
         {
-
             return base.GetParentID(itemDefinition, context);
         }
-        
-
-
     }
 }
