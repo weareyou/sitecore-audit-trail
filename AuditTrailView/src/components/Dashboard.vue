@@ -1,7 +1,7 @@
 <template>
   <div id="dashboard">
-    <Filters :columns="columns" @updatedColumns="updateColumns"></Filters>
-    <DashboardTable :records="records" :columns="columns"></DashboardTable>
+    <Filters :columns="columns" @toggleColumn="toggleColumn" @changeFilter="changeFilter"></Filters>
+    <DashboardTable :records="filteredRecords()" :columns="columns"></DashboardTable>
   </div>
 </template>
 
@@ -21,32 +21,53 @@ export default {
         return {
             loading: false,
             records: [],
+            // TODO: populate columns&recordfilters dynamically
             columns: {
                 "SitecoreInstanceName":true,
                 "Event":true,
-                "ItemId":true,
+                "ItemId":false,
                 "ItemName":true,
                 "User":true,
                 "TemplateName":true,
                 "EventOrigin":true,
                 "Timestamp":true
             },
-            events: {
-                
+            recordFilters: {
             }
         }
-    }/*,
-    computed: {
-        filteredRecords: function() {
-            var rlist = [];
-            
-        }
-    }*/,
+    },
     created() {
         this.retrieveRecords();
         this.subscribeSignalR();
     },
     methods: {
+        filteredRecords: function() {
+            console.log("hit2");
+            if (Object.keys(this.recordFilters).length < 1) {
+                return this.records;
+            }
+
+            var frecords = [];
+            for (var record in this.records) {
+                var pass = true;
+                for (var filter in this.recordFilters) {
+                    console.log(this.records[record][filter]);
+                    if (this.records[record][filter] != undefined && this.records[record][filter] != "") {
+                        
+                        if (!(this.records[record][filter].includes(this.recordFilters[filter]))) {
+                            pass = false;
+                        } 
+                    }
+                }
+
+                if (pass === true) {
+                    frecords.push(this.records[record]);
+                }
+
+          }
+          return frecords;
+            
+        },
         retrieveRecords(){
             this.loading = true;
             axios.get("https://audit-trail.azurewebsites.net/api/recent?code=iUKAj2y4nkWfVttWtzptC5Z1omTmpZrIZ26/6YZt2omB8cMBP/NB0w==")
@@ -104,8 +125,17 @@ export default {
             }
         },
 
-        updateColumns(newColumns) {
-            this.columns = newColumns;
+        toggleColumn(columnName) {
+            this.columns[columnName] = !this.columns[columnName];
+        },
+
+        changeFilter(fieldName, value) {
+            if (value === "" || value == null) {
+                delete this.recordFilters[fieldName];
+            } else {
+                this.recordFilters[fieldName] = value;
+            }
+            this.$forceUpdate();
         }
     }
 

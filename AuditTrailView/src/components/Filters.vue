@@ -1,6 +1,6 @@
 <template>
   <div id="filters">
-    <form class="pure-form a-basic-margin pure-g">
+    <div class="pure-form a-basic-margin pure-g">
       <fieldset class="options-block pure-u-1-5">
       <legend>Columns </legend>
       <collapse :selected="false">
@@ -8,10 +8,10 @@
           Select visible columns
         </div>
         <div slot="collapse-body">
-          <div v-for="(record, index) in records" :key="index">
-          <input type="checkbox" id="record">
-          <label for="record">{{record}}</label>
-          <br/>
+          <div v-for="(column, index) in columns" :key="index">
+            <input type="checkbox" :id="index" :checked="column" @change="toggleColumn(index)" >
+            <label :id="index"> {{ index }}</label>
+            <br/>
           </div>
         </div>
       </collapse>
@@ -19,22 +19,30 @@
       </fieldset>
     <fieldset class="options-block pure-u-4-5" id="filter-options">
         <legend>Filters</legend>
-        
-          
-        <input class="a-basic-margin" type="text" placeholder="Item name or ID">
-        <input class="a-basic-margin" type="text" placeholder="Eventname">
-        <input class="a-basic-margin" type="text" placeholder="User">
-        <input class="a-basic-margin" type="text" placeholder="Startdate (Disables monitor)">
+
+        <collapse :selected="false" class="pure-u-1-4">
+        <div slot="collapse-header" class="column-header">
+          Field Filters
+        </div>
+        <div slot="collapse-body">
+          <div v-for="(column, index) in fieldFilters" :key="index">
+            <label :for="column" class="filter-label">{{ column }}</label><br/>
+            <input class="a-basic-margin" type="text" :id="column"  @change="changeFilter(column, $event.target.value)"> 
+            <br/>
+          </div>
+        </div>
+      </collapse>
+
+        <input class="a-basic-margin" type="datetime-local" placeholder="Startdate">
 
         <button class="pure-button">Reset</button>
 
     </fieldset>
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
-//import Multiselect from 'vue-multiselect';
 import Collapse from 'vue-collapse'
 
 export default {
@@ -46,11 +54,30 @@ export default {
   data () {
 
     return {
-    
+      customFilters:
+      [
+        "Timestamp"
+      ]
     }
   },
   computed: {
-     
+     fieldFilters: function() {
+          var f = [];
+          for (var column in this.columns) {
+              if (!this.customFilters.includes(column)) {
+                f.push(column);
+              }
+          }
+          return f;
+     }
+  },
+  methods: {
+    toggleColumn : function(colName) {
+      this.$emit('toggleColumn', colName);
+    },
+    changeFilter : function(fieldName, value) {
+      this.$emit('changeFilter', fieldName, value);
+    }
   }
 }
 </script>
@@ -62,6 +89,10 @@ export default {
 
 .column-header {
   max-height:0px;
+}
+
+.filter-label {
+  font-size: 12px;
 }
 
 
