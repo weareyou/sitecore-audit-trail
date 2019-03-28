@@ -8,6 +8,6 @@
     "AZURE_STORAGE_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=sitecoreaudittrail;AccountKey=J10JGsEIk6p5/b01ZbAbCXJt4FaYUfJ5RpMn7imQEWcTlXe8Otjr+8CLqmdy3XteamKAfDojyqHYSOeVjyAmQA==;EndpointSuffix=core.windows.net",
     "STORAGE_CALLBACK_TABLE": "SitecoreLogicConnectorCallbacks",
     "FUNCTION_APP_DOMAIN": "https://sitecore-logic-connector.azurewebsites.net",
-    "SUBCRIPTION_ROUTE_CODE": "lKjyIrffDAoLt15r8MS6Kb1sXiWIjvQVHuOeZsxhvpJS3r2ks3IFag=="
+    "SUBSCRIPTION_ROUTE_CODE": "lKjyIrffDAoLt15r8MS6Kb1sXiWIjvQVHuOeZsxhvpJS3r2ks3IFag=="
   }
 }

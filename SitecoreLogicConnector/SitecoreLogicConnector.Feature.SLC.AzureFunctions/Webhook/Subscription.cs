@@ -29,7 +29,8 @@ namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Webhook
                     EnvironmentVariableTarget.Process));
 
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-            CloudTable table = tableClient.GetTableReference("SitecoreWebhookCallbacks");
+            CloudTable table = tableClient.GetTableReference(Environment.GetEnvironmentVariable("STORAGE_CALLBACK_TABLE",
+                EnvironmentVariableTarget.Process));
 
 
             // Check http method
@@ -70,7 +71,9 @@ namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Webhook
                 + "/api/Subscription/DELETE?code="
                 + Environment.GetEnvironmentVariable("SUBSCRIPTION_ROUTE_CODE", EnvironmentVariableTarget.Process)  
                 + "&id=" 
-                + subscription.Id + "&event=" + eventName);
+                + subscription.Id 
+                + "&event=" 
+                + eventName);
             return response;
         }
 
