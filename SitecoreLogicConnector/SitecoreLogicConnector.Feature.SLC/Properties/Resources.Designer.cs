@@ -61,7 +61,7 @@ namespace SitecoreLogicConnector.Feature.SLC.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to HtGwJo1JwSZ4sERiZP5GOuVpWr4gOkuuPZ0ZLXaDYSPjB4b73BA4Rw==.
         /// </summary>
         internal static string AzureFunctionsConnectorAuthCode {
             get {
@@ -70,7 +70,7 @@ namespace SitecoreLogicConnector.Feature.SLC.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to https://sitecore-logic-connector.azurewebsites.net/api/SitecoreEventHook.
         /// </summary>
         internal static string AzureFunctionsConnectorURL {
             get {
