@@ -62,7 +62,7 @@ namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.WebHook
             var insert = TableOperation.Insert(subscription);
             await table.ExecuteAsync(insert);
 
-            // return deletion url in "Location" header
+            // return url in "Location" header
             var response = req.CreateResponse(HttpStatusCode.Created, "Web hook subscription successfully created");
             response.Headers.Add("Location",
                 Environment.GetEnvironmentVariable("FUNCTION_APP_DOMAIN", EnvironmentVariableTarget.Process)

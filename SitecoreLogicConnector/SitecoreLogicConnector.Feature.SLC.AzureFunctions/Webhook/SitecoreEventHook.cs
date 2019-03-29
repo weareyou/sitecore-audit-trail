@@ -46,7 +46,7 @@ namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.WebHook
 
             foreach (var hook in query)
             {
-                await client.PostAsync(hook.CallbackUrl, content); // should this be async?
+                await client.PostAsync(hook.CallbackUrl, content);
             }
 
             return req.CreateResponse(HttpStatusCode.OK, "Web hook callbacks successfully called.");
