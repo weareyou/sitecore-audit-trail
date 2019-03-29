@@ -48,10 +48,10 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Client">
-      <HintPath>..\..\..\..\Data\Inetpub\AuditTrailModule\Website\bin\Sitecore.Client.dll</HintPath>
+      <HintPath>..\..\AuditTrail\AuditTrail.Feature.AuditTrail\bin\Sitecore.Client.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\..\..\Data\Inetpub\AuditTrailModule\Website\bin\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\AuditTrail\AuditTrail.Feature.AuditTrail\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net461\lib\System.Net.Http.dll</HintPath>

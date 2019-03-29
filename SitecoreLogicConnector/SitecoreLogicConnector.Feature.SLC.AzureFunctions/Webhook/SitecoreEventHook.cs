@@ -11,23 +11,23 @@ using Microsoft.Azure.WebJobs.Host;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 
-namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Webhook
+namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.WebHook
 {
     public static class SitecoreEventHook
     {
         [FunctionName("SitecoreEventHook")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = "SitecoreEventHook/{eventName}")]HttpRequestMessage req, string eventName, TraceWriter log)
         {
-            log.Info($"SitecoreEventHook webhook was triggered!");
+            log.Info($"SitecoreEventHook web hook was triggered!");
 
-            // Get the cloud table
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+            // get the cloud table
+            var storageAccount = CloudStorageAccount.Parse(
                 Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING", EnvironmentVariableTarget.Process));
 
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-            CloudTable table = tableClient.GetTableReference(Environment.GetEnvironmentVariable("STORAGE_CALLBACK_TABLE", EnvironmentVariableTarget.Process));
+            var tableClient = storageAccount.CreateCloudTableClient();
+            var table = tableClient.GetTableReference(Environment.GetEnvironmentVariable("STORAGE_CALLBACK_TABLE", EnvironmentVariableTarget.Process));
 
-            // Check JSON contents if necessary
+            // check JSON contents if necessary
             if (eventName != null)
                 return await PerformCallbacks(req, table, eventName);
             else
@@ -36,20 +36,20 @@ namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Webhook
 
         private static async Task<HttpResponseMessage> PerformCallbacks(HttpRequestMessage req, CloudTable table, string eventName)
         {
-            IEnumerable<WebhookSubscription> query = (from sub in table.CreateQuery<WebhookSubscription>() where sub.PartitionKey == eventName select sub);
+            IEnumerable<WebHookSubscription> query = (from sub in table.CreateQuery<WebHookSubscription>() where sub.PartitionKey == eventName select sub);
 
-            HttpClient client = new HttpClient();
+            var client = new HttpClient();
 
-            string json = await req.Content.ReadAsStringAsync();
+            var json = await req.Content.ReadAsStringAsync();
 
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            foreach (WebhookSubscription hook in query)
+            foreach (var hook in query)
             {
-                await client.PostAsync(hook.CallbackUrl, content); // maybe not async later?
+                await client.PostAsync(hook.CallbackUrl, content); // should this be async?
             }
 
-            return req.CreateResponse(HttpStatusCode.OK, "Webhook callbacks successfully called.");
+            return req.CreateResponse(HttpStatusCode.OK, "Web hook callbacks successfully called.");
         }
 
     }

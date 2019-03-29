@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,17 +12,20 @@ namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Authentication
     {
         public static async Task<Cookie> Login(string username, string password)
         {
-            CookieContainer cookies = new CookieContainer();
-            HttpClientHandler handler = new HttpClientHandler { CookieContainer = cookies };
-            HttpClient client = new HttpClient(handler);
-            string loginRoute = Environment.GetEnvironmentVariable("SITECORE_BASE_URL", EnvironmentVariableTarget.Process) + "/api/ssc/auth/login";
+            var cookies = new CookieContainer();
+            var handler = new HttpClientHandler { CookieContainer = cookies };
+            var client = new HttpClient(handler);
+            var loginRoute = Environment.GetEnvironmentVariable("SITECORE_BASE_URL", EnvironmentVariableTarget.Process) + "/api/ssc/auth/login";
 
-            SitecoreCredentials credentials = new SitecoreCredentials();
-            credentials.Username = username;
-            credentials.Password = password;
-            credentials.Domain = Environment.GetEnvironmentVariable("SITECORE_LOGIN_DOMAIN", EnvironmentVariableTarget.Process);
+            var credentials = new SitecoreCredentials
+            {
+                Username = username,
+                Password = password,
+                Domain = Environment.GetEnvironmentVariable("SITECORE_LOGIN_DOMAIN",
+                    EnvironmentVariableTarget.Process)
+            };
 
-            string jsonString = JsonConvert.SerializeObject(credentials);
+            var jsonString = JsonConvert.SerializeObject(credentials);
             var json = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
             var response = await client.PostAsync(loginRoute, json);
@@ -35,7 +36,7 @@ namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Authentication
         }
     }
 
-    class SitecoreCredentials
+    internal class SitecoreCredentials
     {
         public string Username { get; set; }
         public string Password { get; set; }

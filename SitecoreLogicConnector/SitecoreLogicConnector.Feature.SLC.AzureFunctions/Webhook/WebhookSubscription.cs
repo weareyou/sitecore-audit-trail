@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Storage.Table;
+﻿using Microsoft.WindowsAzure.Storage.Table;
 
-namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Webhook
+namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.WebHook
 {
-    public class WebhookSubscription : TableEntity
+    public class WebHookSubscription : TableEntity
     {
-        private string id;
+        private string _id;
 
         public string Id
         {
-            get => id;
-            set
-            {
-                id = RowKey = value;
-            }
+            get => _id;
+            set => _id = RowKey = value;
         }
 
         public string CallbackUrl { get; set; }
 
-        public WebhookSubscription()
+        public WebHookSubscription()
         {
             PartitionKey = "";
         }

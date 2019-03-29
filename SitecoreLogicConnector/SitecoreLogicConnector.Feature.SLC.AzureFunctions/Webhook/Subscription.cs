@@ -10,7 +10,7 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 
-namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Webhook
+namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.WebHook
 {
     public static class Subscription
     {
@@ -22,18 +22,16 @@ namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Webhook
             log.Info("Subscription request received");
             // check whether eventName is valid? (enum?)
 
-
-            // Get the cloud table
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(
+            // get the cloud table
+            var storageAccount = CloudStorageAccount.Parse(
                 Environment.GetEnvironmentVariable("AZURE_STORAGE_CONNECTION_STRING",
                     EnvironmentVariableTarget.Process));
 
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-            CloudTable table = tableClient.GetTableReference(Environment.GetEnvironmentVariable("STORAGE_CALLBACK_TABLE",
+            var tableClient = storageAccount.CreateCloudTableClient();
+            var table = tableClient.GetTableReference(Environment.GetEnvironmentVariable("STORAGE_CALLBACK_TABLE",
                 EnvironmentVariableTarget.Process));
 
-
-            // Check http method
+            // check http method
             if (req.Method == HttpMethod.Post)
                 return await Subscribe(req, table, eventName);
 
@@ -47,13 +45,13 @@ namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Webhook
         private static async Task<HttpResponseMessage> Subscribe(HttpRequestMessage req, CloudTable table,
             string eventName)
         {
-            string jsonContent = await req.Content.ReadAsStringAsync();
+            var jsonContent = await req.Content.ReadAsStringAsync();
             dynamic data = JsonConvert.DeserializeObject(jsonContent);
             string callbackUrl = data?.CallbackUrl;
 
 
             // create subscription record
-            WebhookSubscription subscription = new WebhookSubscription()
+            var subscription = new WebHookSubscription()
             {
                 Id = Guid.NewGuid().ToString(),
                 PartitionKey = eventName,
@@ -61,11 +59,11 @@ namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Webhook
             };
 
             // save in table
-            TableOperation insert = TableOperation.Insert(subscription);
+            var insert = TableOperation.Insert(subscription);
             await table.ExecuteAsync(insert);
 
             // return deletion url in "Location" header
-            var response = req.CreateResponse(HttpStatusCode.Created, "Webhook subscription successfully created");
+            var response = req.CreateResponse(HttpStatusCode.Created, "Web hook subscription successfully created");
             response.Headers.Add("Location",
                 Environment.GetEnvironmentVariable("FUNCTION_APP_DOMAIN", EnvironmentVariableTarget.Process)
                 + "/api/Subscription/DELETE?code="
@@ -79,25 +77,25 @@ namespace SitecoreLogicConnector.Feature.SLC.AzureFunctions.Webhook
 
         private static async Task<HttpResponseMessage> Unsubscribe(HttpRequestMessage req, CloudTable table)
         {
-            string id = req.GetQueryNameValuePairs()
-                .FirstOrDefault(q => string.Compare(q.Key, "id", true) == 0)
+            var id = req.GetQueryNameValuePairs()
+                .FirstOrDefault(q => string.Compare(q.Key, "id", StringComparison.OrdinalIgnoreCase) == 0)
                 .Value;
 
-            string eventName = req.GetQueryNameValuePairs()
-                .FirstOrDefault(q => string.Compare(q.Key, "event", true) == 0)
+            var eventName = req.GetQueryNameValuePairs()
+                .FirstOrDefault(q => string.Compare(q.Key, "event", StringComparison.OrdinalIgnoreCase) == 0)
                 .Value;
 
-            var toDelete = new WebhookSubscription()
+            var toDelete = new WebHookSubscription()
             {
                 Id = id,
                 PartitionKey = eventName,
                 ETag = "*"
             };
 
-            TableOperation delete = TableOperation.Delete(toDelete);
+            var delete = TableOperation.Delete(toDelete);
             await table.ExecuteAsync(delete);
 
-            return req.CreateResponse(HttpStatusCode.OK, "Webhook subscription successfully deleted");
+            return req.CreateResponse(HttpStatusCode.OK, "Web hook subscription successfully deleted");
         }
     }
 }
