@@ -8,13 +8,14 @@ namespace SitecoreLogicConnector.Feature.SLC.Events
 {
     public class ItemSaved
     {
+        public static bool IgnoreScheduledEvents { get; set; } = true;
+
         public void CallWebHook(object sender, EventArgs args)
         {
-            var client = new HttpClient();
-
             var itemChanges = Sitecore.Events.Event.ExtractParameter(args, 1) as Sitecore.Data.Items.ItemChanges;
 
             if (itemChanges == null) return;
+            if (IgnoreScheduledEvents && itemChanges.Item.TemplateName.Equals("Schedule")) return;
 
             var itemId = itemChanges.Item.ID;
             var itemName = itemChanges.Item.Name;
@@ -44,6 +45,8 @@ namespace SitecoreLogicConnector.Feature.SLC.Events
             var itemJsonString = JsonConvert.SerializeObject(itemJson);
 
             var content = new StringContent(itemJsonString, Encoding.UTF8, "application/json");
+
+            var client = new HttpClient();
 
             client.PostAsync(Properties.Resources.AzureFunctionsConnectorURL + "/ItemSaved?code=" + Properties.Resources.AzureFunctionsConnectorAuthCode, content);
         }
