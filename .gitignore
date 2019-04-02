@@ -342,3 +342,10 @@ healthchecksdb
 
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
+AuditTrail/AuditTrail.Feature.AuditTrail/bin/AuditTrail.Feature.AuditTrail.pdb
+AuditTrail/AuditTrail.Feature.AuditTrail/bin/AuditTrail.Feature.AuditTrail.Models.pdb
+AuditTrail/AuditTrail.Feature.AuditTrail/bin/AuditTrail.Feature.AuditTrail.Models.dll
+AuditTrail/AuditTrail.Feature.AuditTrail/bin/AuditTrail.Feature.AuditTrail.dll
+AuditTrail/AuditTrail.Feature.AuditTrail.Models/bin/Debug/netstandard2.0/AuditTrail.Feature.AuditTrail.Models.pdb
+AuditTrail/AuditTrail.Feature.AuditTrail.Models/bin/Debug/netstandard2.0/AuditTrail.Feature.AuditTrail.Models.dll
+AuditTrail/.vs/AuditTrail/v15/Server/sqlite3/storage.ide

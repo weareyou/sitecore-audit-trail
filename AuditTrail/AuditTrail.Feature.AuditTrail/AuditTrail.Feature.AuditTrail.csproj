@@ -144,6 +144,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="View\ItemAuditHtmlBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

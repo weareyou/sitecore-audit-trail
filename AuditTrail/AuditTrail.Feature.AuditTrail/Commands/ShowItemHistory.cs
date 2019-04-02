@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using AuditTrail.Feature.AuditTrail.Network;
+using AuditTrail.Feature.AuditTrail.View;
 using Sitecore.Diagnostics;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
@@ -27,12 +28,25 @@ namespace AuditTrail.Feature.AuditTrail.Commands
             try
             {
                 var records = Task.Run(async () => await FunctionRequests.GetItemHistory(itemId)).Result;
-
-                var websitePath = Sitecore.IO.FileUtil.MapPath("/");
-                var html = File.ReadAllText(websitePath + "Assets/index.html");
-                var notfound = File.ReadAllText(websitePath + "Assets/notfound.html");
                 
-                if (records.Count < 1)
+                SheerResponse.ShowPopup("itemhistory", "center", ItemAuditHtmlBuilder.SmallAuditView(records));
+            }
+            catch (Exception e)
+            {
+                SheerResponse.Alert("Could not retrieve item history: " + e.Message, false);
+            }
+        }
+
+        // ReSharper disable once RedundantOverriddenMember
+        public override CommandState QueryState(CommandContext context)
+        {
+            return base.QueryState(context);
+        }
+    }
+}
+
+/*
+ if (records.Count < 1)
                 {
                     SheerResponse.ShowPopup("itemhistory", "center", notfound);
                     return;
@@ -110,18 +124,4 @@ namespace AuditTrail.Feature.AuditTrail.Commands
                 var tableBodyStart = html.IndexOf("<tbody>", StringComparison.Ordinal) + 7;
 
                 html = html.Insert(tableBodyStart, body);
-                SheerResponse.ShowPopup("itemhistory", "center", html);
-            }
-            catch (Exception e)
-            {
-                SheerResponse.Alert("Could not retrieve item history: " + e.Message, false);
-            }
-        }
-
-        // ReSharper disable once RedundantOverriddenMember
-        public override CommandState QueryState(CommandContext context)
-        {
-            return base.QueryState(context);
-        }
-    }
-}
+*/

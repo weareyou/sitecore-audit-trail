@@ -10,10 +10,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Config/Include/Feature/Feature.AuditTrail.Commands.config">
-      <publishTime>02/25/2019 10:28:46</publishTime>
+      <publishTime>03/27/2019 09:06:06</publishTime>
     </File>
     <File Include="App_Config/Include/Feature/Feature.AuditTrail.DataProviders.config">
-      <publishTime>03/07/2019 11:44:03</publishTime>
+      <publishTime>03/27/2019 09:20:09</publishTime>
     </File>
     <File Include="App_Config/Include/Feature/Feature.AuditTrail.Events.config">
       <publishTime>03/07/2019 14:42:35</publishTime>
@@ -28,22 +28,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/14/2019 13:21:53</publishTime>
     </File>
     <File Include="Assets/index.html">
-      <publishTime>03/22/2019 10:01:02</publishTime>
+      <publishTime>04/02/2019 12:43:00</publishTime>
     </File>
     <File Include="Assets/notfound.html">
-      <publishTime>03/21/2019 16:50:30</publishTime>
+      <publishTime>03/27/2019 09:20:09</publishTime>
     </File>
     <File Include="bin/AuditTrail.Feature.AuditTrail.dll">
-      <publishTime>03/25/2019 12:56:25</publishTime>
+      <publishTime>04/02/2019 12:40:47</publishTime>
     </File>
     <File Include="bin/AuditTrail.Feature.AuditTrail.Models.dll">
-      <publishTime>03/22/2019 10:09:32</publishTime>
+      <publishTime>04/02/2019 10:07:17</publishTime>
     </File>
     <File Include="bin/AuditTrail.Feature.AuditTrail.Models.pdb">
-      <publishTime>03/22/2019 10:09:32</publishTime>
+      <publishTime>04/02/2019 10:07:17</publishTime>
     </File>
     <File Include="bin/AuditTrail.Feature.AuditTrail.pdb">
-      <publishTime>03/25/2019 12:56:25</publishTime>
+      <publishTime>04/02/2019 12:40:47</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>09/05/2018 16:10:50</publishTime>
