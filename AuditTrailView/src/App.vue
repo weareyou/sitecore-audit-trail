@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Dashboard msg="Welcome to Your Vue.js App"/>
+    <Dashboard msg="Sitecore Audit Trail"/>
   </div>
 </template>
 
