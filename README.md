@@ -1,6 +1,6 @@
 # sitecore-audit-trail
 
-Configuration before deployment:
+Configuration before/during deployment:
 
 
 Audit Trail Azure Functions Deploy
@@ -19,6 +19,8 @@ Audit Trail Sitecore Deploy
   - "AZURE_API_DOMAIN": Base domain of the Azure Function App.
   - "AZURE_API_STORE_KEY": Function key of the "StoreEventData" Function.
   - "AZURE_API_GET_ITEM_KEY" Function key of the "GetByItem" Function.
+  
+- Lastly, install the "Sitecore Audit Trail - Accompanying Items.zip" package.
 
 
 Audit Trail View (vue app)
