@@ -75,8 +75,8 @@ export default {
         retrieveRecords($state){
             this.loading = true;
             var pageSize = "30";
-            var route = "https://audit-trail.azurewebsites.net/api/recent/";
-            var apiKey = "code=iUKAj2y4nkWfVttWtzptC5Z1omTmpZrIZ26/6YZt2omB8cMBP/NB0w==";
+            var route = process.env.VUE_APP_API_DOMAIN + "/api/recent/";
+            var apiKey = process.env.VUE_APP_API_KEY;
 
             var url = route + pageSize + "?" + apiKey;
             if (this.continuationToken != "") {
@@ -133,7 +133,7 @@ export default {
             }
 
             function getConnectionInfo() {
-                return axios.post('https://audit-trail.azurewebsites.net/api/GeneralHubSubscribe', null, getAxiosConfig())
+                return axios.post(process.env.VUE_APP_API_DOMAIN + "/api/GeneralHubSubscribe", null, getAxiosConfig())
                     .then(resp => resp.data);
             }
         },
