@@ -95,6 +95,10 @@ export default {
   font-size: 12px;
 }
 
+#filters {
+  min-width:1400px;
+}
+
 
 
 

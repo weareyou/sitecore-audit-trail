@@ -2,6 +2,7 @@
   <div id="dashboard">
     <Filters :columns="columns" @toggleColumn="toggleColumn" @changeFilter="changeFilter"></Filters>
     <DashboardTable :records="filteredRecords()" :columns="columns"></DashboardTable>
+    <infinite-loading @infinite="retrieveRecords" :distance="70"></infinite-loading>
   </div>
 </template>
 
@@ -10,16 +11,19 @@ import Filters from './Filters.vue';
 import DashboardTable from './DashboardTable.vue';
 import * as signalR from '@aspnet/signalr';
 import axios from "axios";
+import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
     name: 'Dashboard',
     components: {
         Filters,
-        DashboardTable
+        DashboardTable,
+        InfiniteLoading
     },
     data() {
         return {
             loading: false,
+            continuationToken: "",
             records: [],
             // TODO: populate columns&recordfilters dynamically
             columns: {
@@ -32,17 +36,17 @@ export default {
                 "EventOrigin":true,
                 "Timestamp":true
             },
+            // key = fieldname, value = match filter
             recordFilters: {
             }
         }
     },
     created() {
-        this.retrieveRecords();
+        //this.retrieveRecords();
         this.subscribeSignalR();
     },
     methods: {
         filteredRecords: function() {
-            console.log("hit2");
             if (Object.keys(this.recordFilters).length < 1) {
                 return this.records;
             }
@@ -68,19 +72,35 @@ export default {
           return frecords;
             
         },
-        retrieveRecords(){
+        retrieveRecords($state){
             this.loading = true;
-            axios.get("https://audit-trail.azurewebsites.net/api/recent?code=iUKAj2y4nkWfVttWtzptC5Z1omTmpZrIZ26/6YZt2omB8cMBP/NB0w==")
+            var pageSize = "30";
+            var route = "https://audit-trail.azurewebsites.net/api/recent/";
+            var apiKey = "code=iUKAj2y4nkWfVttWtzptC5Z1omTmpZrIZ26/6YZt2omB8cMBP/NB0w==";
+
+            var url = route + pageSize + "?" + apiKey;
+            if (this.continuationToken != "") {
+                url = route + pageSize + "/" + encodeURIComponent(this.continuationToken) + "?" + apiKey;
+            }
+
+
+            axios.get(url)
             .then(response => {
                 this.loading = false;
-                this.records = response.data;
+                if (this.records.length < 1) {
+                    this.records = response.data;
+                } else {
+                    this.records.push(...response.data);    
+                } 
+                this.continuationToken = response.headers.continuationtoken;
+                $state.loaded();    
             })
             .catch(error => {
                 this.loading = false;
+                $state.complete();
                 console.log(error);
             })
         },
-
         subscribeSignalR(){
             getConnectionInfo().then(info => {
                 // make compatible with old and new SignalRConnectionInfo
