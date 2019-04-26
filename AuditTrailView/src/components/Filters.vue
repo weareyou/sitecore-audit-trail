@@ -33,9 +33,11 @@
         </div>
       </collapse>
 
+        <!-- TODO: implement datetime filter and reset (enhancement)
         <input class="a-basic-margin" type="datetime-local" placeholder="Startdate">
 
         <button class="pure-button">Reset</button>
+        -->
 
     </fieldset>
     </div>
