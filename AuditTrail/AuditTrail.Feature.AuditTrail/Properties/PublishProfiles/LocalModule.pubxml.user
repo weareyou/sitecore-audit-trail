@@ -34,16 +34,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/27/2019 09:20:09</publishTime>
     </File>
     <File Include="bin/AuditTrail.Feature.AuditTrail.dll">
-      <publishTime>04/02/2019 12:40:47</publishTime>
+      <publishTime>04/26/2019 13:41:40</publishTime>
     </File>
     <File Include="bin/AuditTrail.Feature.AuditTrail.Models.dll">
-      <publishTime>04/02/2019 10:07:17</publishTime>
+      <publishTime>04/24/2019 10:34:31</publishTime>
     </File>
     <File Include="bin/AuditTrail.Feature.AuditTrail.Models.pdb">
-      <publishTime>04/02/2019 10:07:17</publishTime>
+      <publishTime>04/24/2019 10:34:31</publishTime>
     </File>
     <File Include="bin/AuditTrail.Feature.AuditTrail.pdb">
-      <publishTime>04/02/2019 12:40:47</publishTime>
+      <publishTime>04/26/2019 13:41:40</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>09/05/2018 16:10:50</publishTime>
