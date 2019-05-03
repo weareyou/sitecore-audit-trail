@@ -1,7 +1,7 @@
 <template>
     <tr class="tooltip tooltip-scroll select-hover table-row">
         <td v-for="(field, index) in filteredRecord" :field="index" :key="index">
-            {{ field }}
+            {{ field | dynamicFormatFilter }}
         </td>
 
         <div class="wrapper"> 
@@ -17,7 +17,7 @@
                         <div class="indent" v-for="(innerItem, innerIndex) in item" :key="innerIndex">
                             <b>{{ innerIndex }}</b>
                             <div class="indent pure-g" v-for="(savedItem, savedIndex) in innerItem" :key="savedIndex">
-                                <div class="pure-u-1-4">{{ savedIndex }}:</div> <div class="pure-u-3-4">{{ savedItem }}</div>
+                                <div class="pure-u-1-4">{{ savedIndex }}:</div> <div class="pure-u-3-4">{{ savedItem | dynamicFormatFilter }}</div>
                             </div>
                             <br>
 
@@ -49,12 +49,25 @@ export default {
           for (var column in this.columns) {
               var field = this.record[this.columns[column]];
 
+              
+
               if (this.columns[column] === "Timestamp")
                 field = moment(String(this.record[this.columns[column]])).format('MM/DD/YYYY hh:mm');
 
               r.push(field);
           }
           return r;
+      }
+  },
+  filters: {
+      dynamicFormatFilter: function(value) {
+          var datetimeExp = /\d{8}T\d{6}Z/g;
+          // check if datetime
+          if (datetimeExp.test(value)) {
+              return moment(String(value)).format('MM/DD/YYYY hh:mm');
+          }
+        
+        return value;
       }
   }
 }
@@ -87,7 +100,7 @@ tr:hover {
 .tooltip:hover > .tooltip-text, .tooltip:hover > .wrapper {
     pointer-events: auto;
     opacity: 0.8;
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .tooltip > .tooltip-text, .tooltip >.wrapper {

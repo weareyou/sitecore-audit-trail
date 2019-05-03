@@ -27,7 +27,7 @@ namespace AuditTrail.Feature.AuditTrail.Network
 
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            client.PostAsync(Properties.Resources.STORE_EVENT_DATA_FUNCTION_URL, content);
+            client.PostAsync(Properties.Resources.AZURE_API_DOMAIN + "/api/StoreEventData?" + Properties.Resources.AZURE_API_STORE_KEY, content);
         }
         
         public static async Task<List<AuditRecord>> GetItemHistory(string itemId)
@@ -35,7 +35,7 @@ namespace AuditTrail.Feature.AuditTrail.Network
             var client = new HttpClient();
 
             var records = new List<AuditRecord>();
-            var route = "http://audit-trail.azurewebsites.net/api/item/" + itemId + "?code=wV12VHq7F0ACsu0FJWoTWJVPMZAg7wbKy6SI4fR6jCWyyqYdjaqzNg==";
+            var route = Properties.Resources.AZURE_API_DOMAIN + "/api/item/" + itemId + "?" + Properties.Resources.AZURE_API_GET_ITEM_KEY;
 
             var response = await client.GetAsync(route);
 

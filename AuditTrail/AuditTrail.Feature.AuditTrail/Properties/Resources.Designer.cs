@@ -61,20 +61,29 @@ namespace AuditTrail.Feature.AuditTrail.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://audit-trail.azurewebsites.net/api/StoreEventData?code=U1OdekHhABVFyBUFOjT5znGT2EJbfvaV1xdjfgvh/kqw9VkVmxUr4w==.
+        ///   Looks up a localized string similar to http://audit-trail.azurewebsites.net.
         /// </summary>
-        internal static string STORE_EVENT_DATA_FUNCTION_URL {
+        internal static string AZURE_API_DOMAIN {
             get {
-                return ResourceManager.GetString("STORE_EVENT_DATA_FUNCTION_URL", resourceCulture);
+                return ResourceManager.GetString("AZURE_API_DOMAIN", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to http://localhost:7071/api/StoreEventData.
+        ///   Looks up a localized string similar to code=wV12VHq7F0ACsu0FJWoTWJVPMZAg7wbKy6SI4fR6jCWyyqYdjaqzNg==.
         /// </summary>
-        internal static string STORE_EVENT_DATA_FUNCTION_URL_LOCAL {
+        internal static string AZURE_API_GET_ITEM_KEY {
             get {
-                return ResourceManager.GetString("STORE_EVENT_DATA_FUNCTION_URL_LOCAL", resourceCulture);
+                return ResourceManager.GetString("AZURE_API_GET_ITEM_KEY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to code=U1OdekHhABVFyBUFOjT5znGT2EJbfvaV1xdjfgvh/kqw9VkVmxUr4w==.
+        /// </summary>
+        internal static string AZURE_API_STORE_KEY {
+            get {
+                return ResourceManager.GetString("AZURE_API_STORE_KEY", resourceCulture);
             }
         }
     }

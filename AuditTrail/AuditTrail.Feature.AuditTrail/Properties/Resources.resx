@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="STORE_EVENT_DATA_FUNCTION_URL" xml:space="preserve">
-    <value>http://audit-trail.azurewebsites.net/api/StoreEventData?code=U1OdekHhABVFyBUFOjT5znGT2EJbfvaV1xdjfgvh/kqw9VkVmxUr4w==</value>
+  <data name="AZURE_API_DOMAIN" xml:space="preserve">
+    <value>http://audit-trail.azurewebsites.net</value>
   </data>
-  <data name="STORE_EVENT_DATA_FUNCTION_URL_LOCAL" xml:space="preserve">
-    <value>http://localhost:7071/api/StoreEventData</value>
+  <data name="AZURE_API_GET_ITEM_KEY" xml:space="preserve">
+    <value>code=wV12VHq7F0ACsu0FJWoTWJVPMZAg7wbKy6SI4fR6jCWyyqYdjaqzNg==</value>
+  </data>
+  <data name="AZURE_API_STORE_KEY" xml:space="preserve">
+    <value>code=U1OdekHhABVFyBUFOjT5znGT2EJbfvaV1xdjfgvh/kqw9VkVmxUr4w==</value>
   </data>
 </root>

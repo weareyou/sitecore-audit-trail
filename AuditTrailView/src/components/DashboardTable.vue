@@ -1,5 +1,5 @@
 <template>
-<table class="pure-table pure-table-horizontal pure-table-striped">
+<table class="pure-table pure-table-horizontal pure-table-striped dashboard-table">
     <thead>
       <DashboardTableHeader :columns="filteredColumns"></DashboardTableHeader>
     </thead>
@@ -37,5 +37,7 @@ export default {
 </script>
 
 <style>
-
+.dashboard-table {
+    width:100%;
+}
 </style>

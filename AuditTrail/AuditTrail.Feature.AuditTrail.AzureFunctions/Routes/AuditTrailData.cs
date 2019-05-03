@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -17,7 +18,9 @@ namespace AuditTrail.Feature.AuditTrail.AzureFunctions.Routes
     {
         [FunctionName("AuditTrailData")]
         public static async Task<HttpResponseMessage> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "recent")]HttpRequestMessage req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "recent/{pageSize?}/{token?}")]HttpRequestMessage req,
+            int? pageSize,
+            string token,
 
             [CosmosDB(
                 databaseName: "audit-trail",
@@ -25,42 +28,38 @@ namespace AuditTrail.Feature.AuditTrail.AzureFunctions.Routes
                 ConnectionStringSetting = "COSMOS_CONNECTION_STRING")] DocumentClient client,
             ILogger log)
         {
-            // query params for pagination
-            var queryParameters = req.RequestUri.ParseQueryString();
-            var requestToken = string.Empty;
-            if (queryParameters["token"] != null)
-                requestToken = queryParameters["token"];
-
-            const int maxItemCount = 30;
-
             // if a token is provided, return a continuation of a previous search
-            var options = new FeedOptions { EnableCrossPartitionQuery = true, MaxItemCount = maxItemCount };
-            if (requestToken != "")
-                options = new FeedOptions { EnableCrossPartitionQuery = true, MaxItemCount = maxItemCount, RequestContinuation = requestToken };
-
             var collectionUri = UriFactory.CreateDocumentCollectionUri("audit-trail", "audit-records");
 
+            var options = new FeedOptions { EnableCrossPartitionQuery = true, MaxItemCount = pageSize };
             var query = client.CreateDocumentQuery<AuditRecord>(collectionUri, options)
                 .OrderByDescending(q => q.Timestamp)
-                .Take(30)
                 .AsDocumentQuery();
+
+            if (token != null)
+            {
+                options = new FeedOptions {EnableCrossPartitionQuery = true, MaxItemCount = pageSize, RequestContinuation = token};
+
+                query = client.CreateDocumentQuery<AuditRecord>(collectionUri, options)
+                    .AsDocumentQuery();
+
+            }
+
+            
+
+
 
             var records = new List<AuditRecord>();
 
-            var continuationToken = string.Empty;
+            var results = await query.ExecuteNextAsync<AuditRecord>();
 
-            // apparently the MaxItemCount option does not stop the query from producing more results, so we check the page limit manually
-            while (query.HasMoreResults && records.Count < maxItemCount+1)
+            foreach (var record in results)
             {
-                var results = await query.ExecuteNextAsync<AuditRecord>();
-
-                foreach (var record in results)
-                {
-                    records.Add(record);
-                }
-
-                continuationToken = results.ResponseContinuation;
+                records.Add(record);
             }
+
+            var continuationToken = results.ResponseContinuation;
+
             
             if (records.Count == 0)
             {
@@ -77,7 +76,11 @@ namespace AuditTrail.Feature.AuditTrail.AzureFunctions.Routes
                 };
 
                 if (continuationToken != "")
+                {
                     response.Headers.Add("continuationToken", continuationToken);
+                    response.Headers.Add("Access-Control-Allow-Headers", "*");
+                    response.Headers.Add("Access-Control-Expose-Headers", "*");
+                }
 
                 return response;
             }

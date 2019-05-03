@@ -28,12 +28,12 @@ namespace AuditTrail.Feature.AuditTrail.AzureFunctions.Routes
         {
             var collectionUri = UriFactory.CreateDocumentCollectionUri("audit-trail", "audit-records");
 
-            var options = new FeedOptions { EnableCrossPartitionQuery = true, MaxItemCount = 20 };
+            var options = new FeedOptions { EnableCrossPartitionQuery = true, MaxItemCount = 30 };
 
             var query = client.CreateDocumentQuery<AuditRecord>(collectionUri, options)
                 .Where(a => a.ItemId == itemId)
                 .OrderByDescending(q => q.Timestamp)
-                .Take(20)
+                .Take(30)
                 .AsDocumentQuery();
 
             var results = new List<AuditRecord>();
