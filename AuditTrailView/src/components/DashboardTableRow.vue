@@ -49,8 +49,6 @@ export default {
           for (var column in this.columns) {
               var field = this.record[this.columns[column]];
 
-              
-
               if (this.columns[column] === "Timestamp")
                 field = moment(String(this.record[this.columns[column]])).format('MM/DD/YYYY hh:mm');
 

@@ -45,10 +45,6 @@ namespace AuditTrail.Feature.AuditTrail.AzureFunctions.Routes
 
             }
 
-            
-
-
-
             var records = new List<AuditRecord>();
 
             var results = await query.ExecuteNextAsync<AuditRecord>();

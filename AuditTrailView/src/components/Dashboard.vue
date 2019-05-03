@@ -83,7 +83,6 @@ export default {
                 url = route + pageSize + "/" + encodeURIComponent(this.continuationToken) + "?" + apiKey;
             }
 
-
             axios.get(url)
             .then(response => {
                 this.loading = false;
