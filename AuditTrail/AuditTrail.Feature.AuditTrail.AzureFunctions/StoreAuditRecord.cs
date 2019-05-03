@@ -15,7 +15,9 @@ namespace AuditTrail.Feature.AuditTrail.AzureFunctions
             [CosmosDB(
                 databaseName: "audit-trail",
                 collectionName: "audit-records",
-                ConnectionStringSetting = "COSMOS_CONNECTION_STRING")] out dynamic document,
+                ConnectionStringSetting = "COSMOS_CONNECTION_STRING",
+                CreateIfNotExists = true,
+                CollectionThroughput = 400)] out dynamic document,
             ILogger log)
         {
             document = JsonConvert.DeserializeObject<AuditRecord>(req.Content.ReadAsStringAsync().Result);
